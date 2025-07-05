@@ -1,0 +1,11 @@
+[Unit]
+Description=Backup homes            
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/home-backups/backups
+ExecStart=/opt/home-backups/update.sh
+
+[Install]
+WantedBy=multi-user.target
+
