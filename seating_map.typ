@@ -23,7 +23,7 @@
   }
   for d in data {
     let username = d.at(username_idx);
-    if username == "free" { continue; }
+    if username == "free" or username == "issues" { continue; }
     let row = int(d.at(row_idx));
     let col = d.at(col_idx);
     let col = col.to-unicode() - "A".to-unicode() + 1;
