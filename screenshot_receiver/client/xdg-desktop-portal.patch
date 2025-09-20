@@ -1,0 +1,20 @@
+diff --git a/src/xdp-app-info.c b/src/xdp-app-info.c
+index 5f298858..8c958581 100644
+--- a/src/xdp-app-info.c
++++ b/src/xdp-app-info.c
+@@ -967,6 +967,7 @@ xdp_connection_create_app_info_sync (GDBusConnection  *connection,
+   if (app_info)
+     app_info_kind = "test";
+ 
++/*
+   if (app_info == NULL)
+     {
+       app_info = xdp_app_info_flatpak_new (pid, &pidfd, &local_error);
+@@ -981,6 +982,7 @@ xdp_connection_create_app_info_sync (GDBusConnection  *connection,
+       return NULL;
+     }
+   g_clear_error (&local_error);
++*/
+ 
+   if (app_info == NULL)
+     {

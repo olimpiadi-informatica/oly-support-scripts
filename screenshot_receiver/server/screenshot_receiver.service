@@ -1,0 +1,14 @@
+[Unit]
+Description=Screenshot Receiver
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=3
+ExecStart=uwsgi --http :2345 --plugins python --master --module app:app --processes 4
+WorkingDirectory=/opt/screenshot_receiver/
+EnvironmentFile=/opt/screenshot_receiver/env.conf
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target

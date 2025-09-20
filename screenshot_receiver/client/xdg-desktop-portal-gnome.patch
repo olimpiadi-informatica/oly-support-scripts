@@ -1,0 +1,22 @@
+diff --git a/src/screenshotdialog.c b/src/screenshotdialog.c
+index 95e6221..4c2c308 100644
+--- a/src/screenshotdialog.c
++++ b/src/screenshotdialog.c
+@@ -251,7 +251,7 @@ do_take_screenshot (gpointer data)
+     {
+       org_gnome_shell_screenshot_call_screenshot (dialog->shell,
+                                                   include_pointer,
+-                                                  TRUE,
++                                                  FALSE,
+                                                   "Screenshot",
+                                                   dialog->cancellable,
+                                                   screenshot_done,
+@@ -262,7 +262,7 @@ do_take_screenshot (gpointer data)
+       org_gnome_shell_screenshot_call_screenshot_window (dialog->shell,
+                                                          include_border,
+                                                          include_pointer,
+-                                                         TRUE,
++                                                         FALSE,
+                                                          "Screenshot",
+                                                          dialog->cancellable,
+                                                          screenshot_window_done,

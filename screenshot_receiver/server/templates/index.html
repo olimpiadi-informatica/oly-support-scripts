@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Screenshots</title>
+    <style>
+        html, body {
+            height: 100%;
+            text-align: center;
+        }
+        .preview {
+            display: inline-block;
+            width: 19%;
+            vertical-align: top;
+            margin-top: 1em;
+            border: 1px solid lightgray;
+        }
+        .preview-image {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+        }
+        .old-timestamp {
+            background-color: darkorange;
+        }
+    </style>
+</head>
+<body>
+    {% for elem in data %}
+    <div class="preview" tag-ip="{{ elem.ip }}">
+        <p>{{ elem.ip }} - last update <span class="last-updated" tag-timestamp="{{ elem.ts }}">0</span></p>
+        <a href="./latest?ip={{ elem.ip }}" target="_blank">
+            <img class="preview-image" src="./images/{{ elem.ip }}/preview.avif?0"/>
+        </a>
+    </div>
+    {% endfor %}
+
+    <br />
+    <div class="footer">
+        Received screenshots from {{ data|length }} computers.
+    </div>
+
+    <script type="module">
+        import { main } from './static/main.js';
+        main(50);
+    </script>
+</body>
+</html>

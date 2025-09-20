@@ -1,0 +1,11 @@
+[Unit]
+Description=Screenshotter
+
+[Service]
+Type=oneshot
+#User=tutor
+#Group=tutor
+ExecStart=/usr/local/bin/screenshotter.sh
+
+[Install]
+WantedBy=multi-user.target
