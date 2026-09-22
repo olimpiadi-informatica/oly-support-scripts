@@ -26,7 +26,7 @@
 <body>
     <div class="preview" tag-ip="{{ ip }}">
         <p>{{ ip }} - last update <span class="last-updated" tag-timestamp="{{ ts }}">0</span></p>
-        <img class="preview-image" src="./images/{{ ip }}/latest?0"/>
+        <img class="preview-image" src="./images/{{ ip }}/latest?{{ ts }}"/>
     </div>
 
     <script type="module">

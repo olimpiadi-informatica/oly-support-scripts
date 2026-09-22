@@ -28,7 +28,7 @@
     <div class="preview" tag-ip="{{ elem.ip }}">
         <p>{{ elem.ip }} - last update <span class="last-updated" tag-timestamp="{{ elem.ts }}">0</span></p>
         <a href="./latest?ip={{ elem.ip }}" target="_blank">
-            <img class="preview-image" src="./images/{{ elem.ip }}/preview.avif?0"/>
+            <img class="preview-image" src="./images/{{ elem.ip }}/latest.jxl?{{ elem.ts }}"/>
         </a>
     </div>
     {% endfor %}

@@ -35,37 +35,30 @@ def login_required(f):
     return wrapped_view
 
 
-def save_image(source_file, source_ip, is_preview=False):
+def save_image(source_file, source_ip):
     dest_dir = os.path.join(IMAGES_FOLDER, str(source_ip))
     os.makedirs(dest_dir, exist_ok=True)
 
-    if is_preview:
-        dest_file = "preview_new.avif"
-    else:
-        dest_file = datetime.now().isoformat() + ".jxl"
+    dest_file = datetime.now().isoformat() + ".jxl"
 
     dest_path = os.path.join(dest_dir, dest_file)
     print(f"Receiving {source_file.filename} from {source_ip} into {dest_path}")
     source_file.save(dest_path)
 
-    if is_preview:
-        os.replace(dest_path, os.path.join(dest_dir, "preview.avif"))
-    else:
-        os.symlink(dest_file, os.path.join(dest_dir, "latest_new.jxl"))
-        os.replace(
-            os.path.join(dest_dir, "latest_new.jxl"),
-            os.path.join(dest_dir, "latest.jxl"),
-        )
+    os.symlink(dest_file, os.path.join(dest_dir, "latest_new.jxl"))
+    os.replace(
+        os.path.join(dest_dir, "latest_new.jxl"),
+        os.path.join(dest_dir, "latest.jxl"),
+    )
 
 
 @app.route("/upload", methods=["POST"])
 def receive_image():
-    if "file" not in request.files or "preview" not in request.files:
+    if "file" not in request.files:
         print("No file :(")
         return "", 400
 
-    save_image(request.files["file"], request.remote_addr, is_preview=False)
-    save_image(request.files["preview"], request.remote_addr, is_preview=True)
+    save_image(request.files["file"], request.remote_addr)
     return "", 200
 
 
@@ -80,9 +73,7 @@ def get_contestant_ips():
 
 def get_timestamp(ip):
     try:
-        return str(
-            int(os.path.getmtime(os.path.join(IMAGES_FOLDER, ip, "preview.avif")))
-        )
+        return str(int(os.path.getmtime(os.path.join(IMAGES_FOLDER, ip, "latest.jxl"))))
     except:
         return "0"
 

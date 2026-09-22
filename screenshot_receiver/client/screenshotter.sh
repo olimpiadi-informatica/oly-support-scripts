@@ -12,7 +12,7 @@ cleanup() {
 
 trap cleanup EXIT
 
-cat > $TMPDIR/screen.py << EOF
+cat >$TMPDIR/screen.py <<EOF
 #!/usr/bin/env python3
 
 import dbus
@@ -68,8 +68,7 @@ set -xe
 sudo mv ${IMG} $TMPDIR/screen.png
 sudo chown $U:$U $TMPDIR/screen.png
 cjxl $TMPDIR/screen.png -d 1 $TMPDIR/screen.jxl
-convert $TMPDIR/screen.png -resize 640x360 $TMPDIR/screen.avif
 curl -i \
   -X POST -H "Content-Type: multipart/form-data" \
-  -F "file=@$TMPDIR/screen.jxl" -F "preview=@$TMPDIR/screen.avif" \
+  -F "file=@$TMPDIR/screen.jxl" \
   http://olympiads-server:2345/upload
