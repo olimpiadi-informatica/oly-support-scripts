@@ -1,11 +1,8 @@
 import os
-from flask import Flask, request, render_template, send_from_directory, send_file
+from flask import Flask, request, render_template, send_from_directory
 from datetime import datetime
 from functools import wraps
 from glob import glob
-import subprocess
-import tempfile
-import io
 
 IMAGES_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "images")
 USERNAME = os.environ["SCREENSHOT_RECEIVER_USERNAME"]
@@ -108,18 +105,3 @@ def send_preview_timestamp(ip):
 def show_latest():
     ip = request.args["ip"]
     return render_template("detail.html", ip=ip, ts=get_timestamp(ip))
-
-
-@app.route("/images/<ip>/latest", methods=["GET"])
-@login_required
-def send_latest_screenshot(ip):
-    source_file = os.path.join(IMAGES_FOLDER, ip, "latest.jxl")
-    with tempfile.NamedTemporaryFile(suffix=".png") as tmpfile:
-        subprocess.run(["convert", source_file, tmpfile.name])
-
-        with open(tmpfile.name, "rb") as fin:
-            data = fin.read()
-
-    return send_file(
-        io.BytesIO(data), download_name="screenshot.png", mimetype="image/png"
-    )

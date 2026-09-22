@@ -57,9 +57,10 @@ if __name__ == "__main__":
     main()
 EOF
 
-chmod +x $TMPDIR/screen.py
+chmod go+wx $TMPDIR
+chmod go+x $TMPDIR/screen.py
 
-IMG=$(sudo env DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u oii)/bus $TMPDIR/screen.py)
+IMG=$(sudo -u oii env DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u oii)/bus $TMPDIR/screen.py)
 
 U=$(whoami)
 
