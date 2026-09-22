@@ -21,18 +21,25 @@ export function main(round_robin_delay_ms) {
 
     let current_idx = 0;
     function update_one() {
+        if (previews.length === 0) {
+            return;
+        }
         const preview = previews[current_idx];
         const ip = preview.getAttribute('tag-ip');
         const image = preview.querySelector('.preview-image');
         const updated_text = preview.querySelector('.last-updated');
 
-        image.src = image.src.split('?')[0] + '?' + Date.now();
-
         fetch('timestamp/' + ip)
             .then(response => response.text())
             .then(data => {
-                updated_text.setAttribute('tag-timestamp', data);
+                if (data !== updated_text.getAttribute('tag-timestamp')) {
+                    updated_text.setAttribute('tag-timestamp', data);
+                    image.src = image.src.split('?')[0] + '?' + data;
+                }
                 update_timestamp(preview);
+                setTimeout(update_one, round_robin_delay_ms);
+            })
+            .catch(() => {
                 setTimeout(update_one, round_robin_delay_ms);
             });
 
